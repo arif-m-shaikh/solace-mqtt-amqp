@@ -1,0 +1,22 @@
+{
+  "name": "rhea",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "tsc && node ./dist/amqp-receiver.js",
+    "client": "tsc && node ./dist/amqp-sender.js",
+    "mqttclient": "tsc && node ./dist/mqtt-client.js",
+    "mqttserver": "tsc && node ./dist/mqtt-server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^20.10.6",
+    "dotenv": "^16.3.1",
+    "mqtt": "^5.3.4",
+    "rhea": "^3.0.2",
+    "rhea-promise": "^3.0.1"
+  }
+}
