@@ -13,7 +13,7 @@ docker run -p 8080:8080 -p 55555:55555 -p 8008:8008 -p 1883:1883 -p 8000:8000 \
   --env username_admin_password=admin \
   --name=solace solace/solace-pubsub-standard
 
-### Create a queue and subscribing to a topic
+### MQTT Publisher AMQP subscriber
 Use the browser to connect to local solace broker http://localhost:8080/#/login
 1. Login using username: admin password: admin
 2. Click on the default Message VPN.
@@ -25,3 +25,19 @@ Use the browser to connect to local solace broker http://localhost:8080/#/login
    This means when we recieve the message on lastwill it will be forwarded to this queue.
 
 ### defect
+1. If I test using AMQP sender and reciever I have to use the following code.
+    async function createReceiver(connection: Connection, receiverAddress: string): Promise<Receiver> {
+        receiver.on(ReceiverEvents.message, (context: EventContext) => {
+            . . .
+            //console.log("topic %s msg=>: %O", receiverAddress, context.message?.body.content.toString());
+            console.log("Received message: %O", context.message);
+        });
+
+    But if I publish on MQTT and recieve on AMQP. the things has to change.
+        receiver.on(ReceiverEvents.message, (context: EventContext) => {
+            . . .
+            console.log("topic %s msg=>: %O", receiverAddress, context.message?.body.content.toString());
+            //console.log("Received message: %O", context.message);
+        });
+
+    Since when solace translage the message format when doing the protocol translation.
